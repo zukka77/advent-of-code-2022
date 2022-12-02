@@ -69,7 +69,7 @@ fn second_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<i32> {
         if outcome == "X" {
             // DEFEAT
             if opponent == "A" {
-                //ROCK
+                // ROCK
                 points += POINTS["SCISSORS"];
                 continue;
             }
@@ -82,8 +82,9 @@ fn second_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<i32> {
             continue;
         }
         if outcome == "Y" {
-            //DRAW
+            // DRAW
             if opponent == "A" {
+                // ROCK
                 points += 3 + POINTS["ROCK"];
                 continue;
             }
