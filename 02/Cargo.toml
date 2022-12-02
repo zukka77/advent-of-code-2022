@@ -1,0 +1,11 @@
+[package]
+name = "advent-of-code-2022-02"
+version = "0.1.0"
+edition = "2021"
+[[bin]]
+name="02"
+path="./02.rs"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+phf = { version = "0.11.1", features = ["macros"] }
