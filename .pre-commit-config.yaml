@@ -1,0 +1,14 @@
+repos:
+-   repo: local
+    hooks:
+      - id: fmt
+        files: \.rs
+        language: system
+        entry: rustfmt --
+        name: fmt
+-   repo: https://github.com/psf/black 
+    rev: 22.10.0
+    hooks:
+    - id: black
+      args: ["-l","120"]
+
