@@ -95,7 +95,7 @@ fn first_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<String> {
     stack_keys.sort();
     let top_stacks: Vec<char> = stack_keys
         .iter()
-        .map(|k| stacks.get(k).unwrap()[stacks.get(k).unwrap().len() - 1]) // get the stack and the his last character
+        .map(|k| stacks.get(k).unwrap()[stacks.get(k).unwrap().len() - 1]) // get the stack and his last character
         .collect();
     return Ok(top_stacks.iter().collect());
 }
