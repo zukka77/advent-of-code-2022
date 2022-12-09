@@ -138,7 +138,7 @@ fn first_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<usize> {
     let mut tail_positions = HashSet::new();
     tail_positions.insert("0_0".to_string());
     for line in input_lines {
-        let parts: Vec<&str> = line.split(" ").take(2).collect();
+        let parts: Vec<&str> = line.split(" ").collect();
         let direction = parts[0];
         let steps = parts[1].parse::<u32>().unwrap();
         match direction {
