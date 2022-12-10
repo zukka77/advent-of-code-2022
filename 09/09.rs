@@ -22,10 +22,10 @@ where
     Ok(io::BufReader::new(file).lines())
 }
 
-fn move_tail<'a>(
+fn move_tail(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
-    tail_positions: &'a mut HashSet<(i32, i32)>,
+    tail_positions: &mut HashSet<(i32, i32)>,
 ) {
     if head_position[1] - tail_position[1] > 1 {
         //UP
@@ -78,11 +78,11 @@ fn move_tail<'a>(
     tail_positions.insert((tail_position[0], tail_position[1]));
 }
 
-fn move_up<'a>(
+fn move_up(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<(i32, i32)>,
+    tail_positions: &mut HashSet<(i32, i32)>,
 ) {
     for _ in 0..steps {
         head_position[1] += 1;
@@ -90,11 +90,11 @@ fn move_up<'a>(
     }
 }
 
-fn move_down<'a>(
+fn move_down(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<(i32, i32)>,
+    tail_positions: &mut HashSet<(i32, i32)>,
 ) {
     for _ in 0..steps {
         head_position[1] -= 1;
@@ -102,11 +102,11 @@ fn move_down<'a>(
     }
 }
 
-fn move_right<'a>(
+fn move_right(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<(i32, i32)>,
+    tail_positions: &mut HashSet<(i32, i32)>,
 ) {
     for _ in 0..steps {
         head_position[0] += 1;
@@ -114,11 +114,11 @@ fn move_right<'a>(
     }
 }
 
-fn move_left<'a>(
+fn move_left(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<(i32, i32)>,
+    tail_positions: &mut HashSet<(i32, i32)>,
 ) {
     for _ in 0..steps {
         head_position[0] -= 1;
