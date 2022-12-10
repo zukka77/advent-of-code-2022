@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 from functools import reduce
 import logging
-import re
+from math import copysign
 
 logging.basicConfig()
 log = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ def move_left(head_position: List[int], tail_position: List[int], steps: int, ta
         move_tail(head_position, tail_position, tail_positions)
 
 
-def move_tail(head_position: List[int], tail_position: List[int], tail_positions: set):
+def move_tail_old(head_position: List[int], tail_position: List[int], tail_positions: set):
     if head_position[1] - tail_position[1] > 1:  # UP
         if head_position[0] == tail_position[0]:
             tail_position[1] += 1
@@ -71,6 +71,15 @@ def move_tail(head_position: List[int], tail_position: List[int], tail_positions
             tail_position[0] -= 1
             tail_position[1] -= 1
     tail_positions.add((tail_position[0], tail_position[1]))
+
+
+def move_tail(head_position: List[int], tail_position: List[int], tail_positions: set):
+    if abs(head_position[0] - tail_position[0]) > 1 or abs(head_position[1] - tail_position[1]) > 1:
+        if head_position[0] != tail_position[0]:
+            tail_position[0] += copysign(1, head_position[0] - tail_position[0])
+        if head_position[1] != tail_position[1]:
+            tail_position[1] += copysign(1, head_position[1] - tail_position[1])
+        tail_positions.add((tail_position[0], tail_position[1]))
 
 
 def first_question(input_data: str) -> int:

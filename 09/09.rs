@@ -22,7 +22,8 @@ where
     Ok(io::BufReader::new(file).lines())
 }
 
-fn move_tail(
+#[allow(dead_code)]
+fn move_tail_old(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     tail_positions: &mut HashSet<(i32, i32)>,
@@ -76,6 +77,20 @@ fn move_tail(
         }
     }
     tail_positions.insert((tail_position[0], tail_position[1]));
+}
+
+fn move_tail(
+    head_position: &mut Vec<i32>,
+    tail_position: &mut Vec<i32>,
+    tail_positions: &mut HashSet<(i32, i32)>,
+) {
+    if (head_position[0] - tail_position[0]).abs() > 1
+        || (head_position[1] - tail_position[1]).abs() > 1
+    {
+        tail_position[0] += (head_position[0] - tail_position[0]).signum();
+        tail_position[1] += (head_position[1] - tail_position[1]).signum();
+        tail_positions.insert((tail_position[0], tail_position[1]));
+    }
 }
 
 fn move_up(
