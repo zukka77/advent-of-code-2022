@@ -15,10 +15,8 @@ def first_question(input_data: str) -> int:
     strengths = []
     instruction_queue = []
     lines = input_data.splitlines()
-    i = 0
-    cycle = 1
+
     for (i, line) in enumerate(input_data.splitlines()):
-        line = lines[i]
         if len(instruction_queue):
             X += instruction_queue.pop(0)
         cycle = i + 1
@@ -29,7 +27,7 @@ def first_question(input_data: str) -> int:
         else:
             quantity = int(line.split()[1])
             instruction_queue = instruction_queue + [0, quantity]
-
+    # DRAIN QUEUE
     while len(instruction_queue):
         X += instruction_queue.pop(0)
         cycle += 1
@@ -42,11 +40,8 @@ def second_question(input_data: str):
     X = 1
     instruction_queue = []
     lines = input_data.splitlines()
-    i = 0
     cycle = 0
-    r = c = 0
     for (i, line) in enumerate(input_data.splitlines()):
-        line = lines[i]
         if cycle % 40 == 0:
             sys.stdout.write("\n")
         if cycle // 40 == 6:
@@ -57,13 +52,13 @@ def second_question(input_data: str):
         if abs(((cycle - 1) % 40) - X) <= 1:
             sys.stdout.write("#")
         else:
-            sys.stdout.write(" ")
+            sys.stdout.write(".")
         if line == "noop":
             instruction_queue.append(0)
         else:
             quantity = int(line.split()[1])
             instruction_queue = instruction_queue + [0, quantity]
-
+    # DRAIN QUEUE
     while len(instruction_queue) and cycle // 40 < 6:
         if cycle % 40 == 0:
             sys.stdout.write("\n")
@@ -72,7 +67,7 @@ def second_question(input_data: str):
         if abs(((cycle - 1) % 40) - X) <= 1:
             sys.stdout.write("#")
         else:
-            sys.stdout.write(" ")
+            sys.stdout.write(".")
 
 
 if __name__ == "__main__":
