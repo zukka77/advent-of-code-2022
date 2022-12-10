@@ -25,8 +25,8 @@ where
 fn move_tail<'a>(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
-    tail_positions: &'a mut HashSet<String>,
-) -> &'a mut HashSet<String> {
+    tail_positions: &'a mut HashSet<(i32, i32)>,
+) {
     if head_position[1] - tail_position[1] > 1 {
         //UP
         if head_position[0] == tail_position[0] {
@@ -75,68 +75,63 @@ fn move_tail<'a>(
             tail_position[1] -= 1;
         }
     }
-    tail_positions.insert(format!("{}_{}", tail_position[0], tail_position[1]));
-    tail_positions
+    tail_positions.insert((tail_position[0], tail_position[1]));
 }
 
 fn move_up<'a>(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<String>,
-) -> &'a mut HashSet<String> {
+    tail_positions: &'a mut HashSet<(i32, i32)>,
+) {
     for _ in 0..steps {
         head_position[1] += 1;
         move_tail(head_position, tail_position, tail_positions);
     }
-    tail_positions
 }
 
 fn move_down<'a>(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<String>,
-) -> &'a mut HashSet<String> {
+    tail_positions: &'a mut HashSet<(i32, i32)>,
+) {
     for _ in 0..steps {
         head_position[1] -= 1;
         move_tail(head_position, tail_position, tail_positions);
     }
-    tail_positions
 }
 
 fn move_right<'a>(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<String>,
-) -> &'a mut HashSet<String> {
+    tail_positions: &'a mut HashSet<(i32, i32)>,
+) {
     for _ in 0..steps {
         head_position[0] += 1;
         move_tail(head_position, tail_position, tail_positions);
     }
-    tail_positions
 }
 
 fn move_left<'a>(
     head_position: &mut Vec<i32>,
     tail_position: &mut Vec<i32>,
     steps: u32,
-    tail_positions: &'a mut HashSet<String>,
-) -> &'a mut HashSet<String> {
+    tail_positions: &'a mut HashSet<(i32, i32)>,
+) {
     for _ in 0..steps {
         head_position[0] -= 1;
         move_tail(head_position, tail_position, tail_positions);
     }
-    tail_positions
 }
 
 fn first_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<usize> {
     let input_lines: Vec<String> = lines.map(|line| line.unwrap()).collect();
     let mut head_position = vec![0, 0];
     let mut tail_position = vec![0, 0];
-    let mut tail_positions = HashSet::new();
-    tail_positions.insert("0_0".to_string());
+    let mut tail_positions = HashSet::from([(0, 0)]);
+    //tail_positions.insert("0_0".to_string());
     for line in input_lines {
         let parts: Vec<&str> = line.split(" ").collect();
         let direction = parts[0];
@@ -175,13 +170,11 @@ fn first_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<usize> {
 fn second_question(lines: io::Lines<io::BufReader<File>>) -> io::Result<usize> {
     let input_lines: Vec<String> = lines.map(|line| line.unwrap()).collect();
     let mut rope_positions: Vec<Vec<i32>> = vec![];
-    let mut tail_positions: Vec<HashSet<String>> = vec![];
+    let mut tail_positions = vec![];
     for _ in 0..10 {
         //init structures
         rope_positions.push(vec![0, 0]);
-        let mut tmp = HashSet::new();
-        tmp.insert("0_0".to_string());
-        tail_positions.push(tmp);
+        tail_positions.push(HashSet::from([(0, 0)]));
     }
     for line in input_lines {
         let parts: Vec<&str> = line.split(" ").collect();

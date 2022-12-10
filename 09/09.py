@@ -9,35 +9,31 @@ log = logging.getLogger(__name__)
 log.setLevel(level=logging.DEBUG)
 
 
-def move_up(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set) -> set:
+def move_up(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set):
     for _ in range(steps):
         head_position[1] += 1
         move_tail(head_position, tail_position, tail_positions)
-    return tail_positions
 
 
-def move_down(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set) -> set:
+def move_down(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set):
     for _ in range(steps):
         head_position[1] -= 1
         move_tail(head_position, tail_position, tail_positions)
-    return tail_positions
 
 
-def move_right(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set) -> set:
+def move_right(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set):
     for _ in range(steps):
         head_position[0] += 1
         move_tail(head_position, tail_position, tail_positions)
-    return tail_positions
 
 
-def move_left(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set) -> set:
+def move_left(head_position: List[int], tail_position: List[int], steps: int, tail_positions: set):
     for _ in range(steps):
         head_position[0] -= 1
         move_tail(head_position, tail_position, tail_positions)
-    return tail_positions
 
 
-def move_tail(head_position: List[int], tail_position: List[int], tail_positions: set) -> set:
+def move_tail(head_position: List[int], tail_position: List[int], tail_positions: set):
     if head_position[1] - tail_position[1] > 1:  # UP
         if head_position[0] == tail_position[0]:
             tail_position[1] += 1
@@ -74,14 +70,13 @@ def move_tail(head_position: List[int], tail_position: List[int], tail_positions
         else:
             tail_position[0] -= 1
             tail_position[1] -= 1
-    tail_positions.add(f"{tail_position[0]}_{tail_position[1]}")
-    return tail_positions
+    tail_positions.add((tail_position[0], tail_position[1]))
 
 
 def first_question(input_data: str) -> int:
     head_position = [0, 0]
     tail_position = [0, 0]
-    tail_positions = {"0_0"}
+    tail_positions = {(0, 0)}
     for line in input_data.splitlines():
         (direction, steps) = line.split()
         match direction:
@@ -98,7 +93,7 @@ def first_question(input_data: str) -> int:
 
 def second_question(input_data: str) -> int:
     rope_positions = [[0, 0] for x in range(10)]
-    tail_positions = [{"0_0"} for x in range(10)]
+    tail_positions = [{(0, 0)} for x in range(10)]
     for line in input_data.splitlines():
         (direction, steps) = line.split()
         for _ in range(int(steps)):
