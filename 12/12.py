@@ -94,20 +94,21 @@ def second_question(input_data: str) -> int:
     nrows = len(field)
     # Build Graph
     G = {(y, x): field[y][x] for x in range(ncols) for y in range(nrows)}
-    # Find neighbors
+    # Find neighbors (REVERSED!)
     for y in range(nrows):
         for x in range(ncols):
             for yy in range(max(0, y - 1), min(nrows, y + 2)):
                 if field[yy][x]["ordval"] - field[y][x]["ordval"] <= 1 and y != yy:
-                    field[y][x]["neigh"].add((yy, x))
+                    field[yy][x]["neigh"].add((y, x))
             for xx in range(max(0, x - 1), min(ncols, x + 2)):
                 if field[y][xx]["ordval"] - field[y][x]["ordval"] <= 1 and x != xx:
-                    field[y][x]["neigh"].add((y, xx))
+                    field[y][xx]["neigh"].add((y, x))
 
-    starting_points = [x["coord"] for x in G.values() if x["val"] == "a"]
-    # get steps number for every starting point
-    steps = [dijkstra(G, sp)[1][(end[0], end[1])] for sp in starting_points]
-    return sorted(steps)[0]
+    a_points = [x["coord"] for x in G.values() if x["val"] == "a"]
+
+    # go from end to "a"s
+    _, node_costs = dijkstra(G, (end[0], end[1]))
+    return sorted([cost for node, cost in node_costs.items() if node in a_points])[0]
 
 
 if __name__ == "__main__":
